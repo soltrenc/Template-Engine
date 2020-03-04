@@ -10,6 +10,79 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+const memberArray = [];
+
+const questionsMan = [{
+    type: "input",
+    name: "name",
+    message: "Enter manager's name."
+},
+{
+    type: "input",
+    name: "id",
+    message: "Enter manager's id."
+},
+{
+    type: "input",
+    name: "email",
+    message: "Enter manager's email."
+},
+{
+    type: "input",
+    name: "officeNumber",
+    message: "Enter's manager's office number"
+}];
+
+const questionsEmp = [{
+    type: "input",
+    name: "name",
+    message: "Enter employee's name."
+},
+{
+    type: "input",
+    name: "id",
+    message: "Enter employee's id."
+},
+{
+    type: "input",
+    name: "email",
+    message: "Enter employee's email."
+},
+{
+    type: "list",
+    name: "role",
+    message: "Choose employee's role.",
+    choices: ["Engineer", "Intern"]
+}];
+
+// inquirer.prompt(questionsMan);
+async function init() {
+
+    let managerInfo;
+
+    await inquirer.prompt(questionsMan)
+        .then(function (answers) {
+            const managerEmail = answers.email;
+            const managerName = answers.name;
+            const managerId = answers.id;
+            const managerOffice = answers.officeNumber;
+            managerInfo = new Manager(managerName, managerId, managerEmail, managerOffice)
+        });
+
+    let employeeInfo;
+
+    console.log(managerInfo);
+    await inquirer.prompt(questionsEmp)
+        .then(function (answers) {
+            const employeeName = answers.name;
+            const employeeId = answers.id;
+            const employeeEmail = answers.email;
+            const employeeRole = answers.role;
+            employeeInfo = new Employee(employeeName, employeeId, employeeEmail, employeeRole)
+        });
+}
+
+init()
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
